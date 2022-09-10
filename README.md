@@ -14,6 +14,7 @@ PM> Install-Package Margarida.Core.Linq
 ```
 
 ## Extensions
+ - [Select](#select) 
  - [ToCompare](#tocompare) 
  - [ChunkBy](#chunkby) 
  - [DistinctBy](#distinctby) 
@@ -21,7 +22,43 @@ PM> Install-Package Margarida.Core.Linq
  - [Shuffle](#shuffle) 
  - [ForEach](#foreach) 
  - [Most](#most) 
-  
+
+## Select
+
+### Select with Action
+Applies an action to an instance directly and project the instance.
+
+#### Usage
+```csharp
+var person = new Person { Name = "jonh" };
+person.Select(x => x.Name = "jonh wick"); // set person name = "Jonh Wick"
+```
+### Select with Function
+Projects a element of a instance into a new form. </br>
+Invoking a transform function on to an instance and project the instance.
+
+#### Usage
+```csharp
+Person person = new Person { Name = "Jonh Wick" };
+var name = person.Select(x => x.Name); // name = "Jonh Wick"
+```
+
+### Tip 💡
+Sometimes we need to execute a method and keep the instance, but we can't.
+```csharp
+var instance = new Instance().SetPropertyValue(1); // SetPropertyValue dont have return.
+// Error CS0815  Cannot assign void to an implicitly-typed variable
+```
+So we need to define the instance first, then call the method.
+```csharp
+var instance = new Instance();
+instance.SetPropertyValue(1);
+```
+Select with Action resolve this.
+```csharp
+var instance = new Instance().Select(x => x.SetPropertyValue(1));
+```
+
 ## ToCompare
 Compare each items in one sequence with the next.
 
@@ -73,7 +110,8 @@ new[] { -1, 0, 1, 3 }.Shuffle() // { 0, 1, 3, -1 }
 ```
 
 ## ForEach
-Executes a statement or a block of statements for each element in an enumerable.
+A simple way to write foreach statement in single-line.<br />
+Executes a action or a body-action for each element in an enumerable. 
 
 #### Usage
 ```csharp
@@ -92,7 +130,15 @@ Output:
 ```csharp
 var list = new[] { 1, 3, 2, 4, 0, -1 };
 int top;
+
 top = list.Most((x, y) => x < y); // returns the smallest of a list.
+Console.WriteLine(top);
 
 top = list.Most((x, y) => x > y); // returns the biggest of a list.
+Console.WriteLine(top);
+
+Output:
+-1
+ 4
 ```
+
