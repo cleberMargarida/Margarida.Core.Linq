@@ -2,7 +2,8 @@
 
 # Margarida Core Linq 
 ## Overview
-Personal  **Linqs** Extensions for **.NET Core applications**
+
+Library based on **Linq** that allows you to transform, iterate and query using extensions and also provides some utility methods for **.NET Core applications**.
 
 Installation
 -------------
