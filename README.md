@@ -1,4 +1,4 @@
-[![Latest version](https://img.shields.io/nuget/v/Margarida.Core.Attributes.svg)](https://www.nuget.org/packages?q=Margarida.Core.Attributes) [![License LGPLv3](https://img.shields.io/badge/license-LGPLv3-green.svg)](https://www.gnu.org/licenses/lgpl-3.0.html)
+[![Latest version](https://img.shields.io/nuget/v/Margarida.Core.Linq.svg)](https://www.nuget.org/packages?q=Margarida.Core.Linq) [![License LGPLv3](https://img.shields.io/badge/license-Apache-blue.svg)](https://licenses.nuget.org/Apache-1.1)
 
 # Margarida Core Linq 
 ## Overview
