@@ -13,6 +13,7 @@ namespace Margarida.Core.Linq
             public CompareOptions(IEnumerable<bool> booleans) => this.booleans = booleans;
             public bool All => booleans.All(x => x);
             public bool Any => booleans.Any(x => x);
+            public bool None => booleans.All(x => !x);
         }
 
         public static CompareOptions ToCompare<T>(this IEnumerable<T> values, Func<T,T,bool> predicate)
@@ -21,8 +22,9 @@ namespace Margarida.Core.Linq
 
             IEnumerable<bool> GetResultsOfComparison()
             {
-                T previous = values.FirstOrDefault();
                 var enumerator = values.GetEnumerator();
+                enumerator.MoveNext();
+                T previous = enumerator.Current;
                 while (enumerator.MoveNext())
                 {
                     yield return predicate.Invoke(previous, enumerator.Current);
@@ -35,12 +37,6 @@ namespace Margarida.Core.Linq
             return values.Select((v, i) => new { v, groupIndex = i / chunkSize })
                          .GroupBy(x => x.groupIndex)
                          .Select(g => g.Select(x => x.v));
-        }
-
-        public static void AddRange<T>(this IList<T> dest, IEnumerable<T> source)
-        {
-            foreach (var set in source)
-                dest?.Add(set);
         }
 
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> func)

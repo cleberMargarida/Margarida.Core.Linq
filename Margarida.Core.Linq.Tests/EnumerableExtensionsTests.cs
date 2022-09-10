@@ -9,6 +9,12 @@ namespace Margarida.Core.Linq.Tests
     public class EnumerableExtensionsTests
     {
         [TestMethod]
+        public void ToCompare_PreviusIsLessThenNext_ShouldBeTrue()
+        {
+            new[] { 1, 2, 3 }.Select(x => x.ToCompare((x, y) => x < y).All.Should().BeTrue());
+        }
+
+        [TestMethod]
         public void Most_SmallestAndBiggest_ShouldReturnTheSmallestNdBiggest()
         {
             var list = new[] { 1, 3, 2, 4, 0, -1 };
@@ -23,14 +29,9 @@ namespace Margarida.Core.Linq.Tests
         [TestMethod]
         public void ChunkyByTwo_ShouldReturnTwoListsContainingDiffItens()
         {
-            new[] { 1, 3, 2, 4, 0, -1 }
-                .ChunkBy(2)
-                .Should()
-                .HaveCount(3)
-                .And
-                .Match(lists => lists
-                .ToCompare((x,y) => x
-                .Intersect(y).Any()).Any);
+            var chunk = new[] { 1, 2, 3, 4 }.ChunkBy(2);
+
+            new[] { 1, 3, 2, 4, 0, -1 }.ChunkBy(2).Should().HaveCount(3).And.Match(lists => lists.ToCompare((x,y) => x.Intersect(y).Any()).None);
         }
 
         [TestMethod]
@@ -38,18 +39,19 @@ namespace Margarida.Core.Linq.Tests
         {
             int i = 0;
             new[] { 1, 2, 3, 4, 5 }.ForEach(x => i++);
-            i.Should()
-             .Be(5);
+            i.Should().Be(5);
         }
 
         [TestMethod]
         public void InsertAt_ShouldInsertValueAtIndex()
         {
-            new[] { 1, 2, 3, 4 }
-                .InsertAt(5, 4)
-                .Select(x => x[4]
-                .Should()
-                .Be(5));
+            new[] { 1, 2, 3, 4 }.InsertAt(5, 4).Select(x => x[4].Should().Be(5));
+        }
+
+        [TestMethod]
+        public void DistinctBy_ShouldFilterRepeateds()
+        {
+            new[] { 1, 1, 1, 2 }.DistinctBy(x => x).Should().HaveCount(2).And.Match(x => x.First() == 1 && x.Last() == 2);
         }
     }
 }
