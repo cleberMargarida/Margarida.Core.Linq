@@ -91,6 +91,16 @@ namespace Margarida.Core.Linq
 
             return actual;
         }
+
+        public static bool None<T>(this IEnumerable<T> values)
+        {
+            return !values.Any();
+        }
+
+        public static bool None<T>(this IEnumerable<T> values, Func<T, bool> predicate)
+        {
+            return !values.Any(predicate);
+        }
     }
 
 }
