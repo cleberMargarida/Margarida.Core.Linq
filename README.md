@@ -16,6 +16,7 @@ PM> Install-Package Margarida.Core.Linq
 
 ## Extensions
  - [Select](#select) 
+ - [None](#none) 
  - [ToCompare](#tocompare) 
  - [ChunkBy](#chunkby) 
  - [DistinctBy](#distinctby) 
@@ -58,6 +59,18 @@ instance.SetPropertyValue(1);
 Select with Action resolve this.
 ```csharp
 var instance = new Instance().Select(x => x.SetPropertyValue(1));
+```
+
+## None
+Determines whether none element of a sequence exists or satisfies a condition.
+
+```csharp
+var list = new int[] { };
+var listAreEmpty = list.None(); //true
+
+list = new int[] { 0, 0, 0 };
+var thereNoneGreaterThanZero = list.None(x => x > 0); //true
+
 ```
 
 ## ToCompare
@@ -142,4 +155,3 @@ Output:
 -1
  4
 ```
-
