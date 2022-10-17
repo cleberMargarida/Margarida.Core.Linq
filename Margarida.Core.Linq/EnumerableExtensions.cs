@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using static System.Linq.Enumerable;
 
 namespace Margarida.Core.Linq
 {
@@ -16,7 +17,7 @@ namespace Margarida.Core.Linq
             public bool None => booleans.All(x => !x);
         }
 
-        public static CompareOptions ToCompare<T>(this IEnumerable<T> values, Func<T,T,bool> predicate)
+        public static CompareOptions ToCompare<T>(this IEnumerable<T> values, Func<T, T, bool> predicate)
         {
             return new CompareOptions(GetResultsOfComparison());
 
@@ -42,8 +43,8 @@ namespace Margarida.Core.Linq
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> func)
         {
             var keyVisited = new HashSet<TKey>();
-            foreach (T el in source) 
-                if (keyVisited.Add(func(el))) 
+            foreach (T el in source)
+                if (keyVisited.Add(func(el)))
                     yield return el;
         }
 
@@ -100,6 +101,18 @@ namespace Margarida.Core.Linq
         public static bool None<T>(this IEnumerable<T> values, Func<T, bool> predicate)
         {
             return !values.Any(predicate);
+        }
+
+        public static bool Contains<T>(this IEnumerable<T> sequence, params T[] values)
+        {
+            foreach (var _ in from item in values
+                              where !Enumerable.Contains(sequence, item)
+                              select item)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 

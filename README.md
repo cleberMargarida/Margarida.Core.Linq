@@ -13,8 +13,8 @@ Margarida Core Linq is available as a NuGet package. You can install it using th
 ```
 PM> Install-Package Margarida.Core.Linq
 ```
-
 ## Extensions
+ - [For](#for) 
  - [Select](#select) 
  - [ToCompare](#tocompare) 
  - [ChunkBy](#chunkby) 
@@ -23,6 +23,59 @@ PM> Install-Package Margarida.Core.Linq
  - [Shuffle](#shuffle) 
  - [ForEach](#foreach) 
  - [Most](#most) 
+
+## For
+
+### foreach using range
+Using kotlin language, when you need to iterate a range there is this native function:
+
+```kotlin
+for (int i in 0..9)
+    //do something 10x
+```
+
+In C# we need to use the conventional `for` or use the enumerable extension `Range` to produce the same effect.
+
+```csharp
+for (var i = 0; i <= 9; i++)
+    //do something 10x
+```
+```csharp
+foreach (var i in Enumerable.Range(0,9))
+    //do something 10x
+```
+
+But using C# 9.0 we can create extensions for implicit indexes. In this package we include this improvement, and you can use that. 
+
+#### Usage
+```csharp
+ foreach (var i in 0..9)
+    //do something 10x
+```
+### foreach using multiple variables
+
+When we need iterate two or more sequences, there are a few ways to do it, like using conventional `for` or combining `Linq` extensions.
+
+```csharp
+ for (var i = 0; i < sequence1.Count(); i++)
+ {
+     var itemFromSequenceOne = sequence1[i];
+     var itemFromSequenceTwo = sequence2[i];
+ }
+```
+The problem with using this is that if you have more items in sequence than one another, an out-of-range exception can be a triggered.
+<br>
+<br>
+In this package has been created, an extension to create a tuple between the sequences, and now you can easily iterate the two.
+
+#### Usage
+```csharp
+ foreach (var item in (sequence1,sequence2))
+ {
+     var itemFromSequence1 = item.item1;
+     var itemFromSequence1 = item.item2;
+ }
+```
 
 ## Select
 
