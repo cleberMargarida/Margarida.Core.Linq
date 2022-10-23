@@ -73,8 +73,8 @@ In this package has been created, an extension to create a tuple between the seq
 ```csharp
  foreach (var item in (sequence1,sequence2))
  {
-     var itemFromSequence1 = item.item1;
-     var itemFromSequence1 = item.item2;
+     var itemFromSequenceOne = item.item1;
+     var itemFromSequenceTwo = item.item2;
  }
 ```
 
